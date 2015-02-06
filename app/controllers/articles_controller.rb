@@ -53,6 +53,15 @@ class ArticlesController < ApplicationController
 		end
 	end
 
+	def destroy
+		# We call destroy on Active Record objects when you want to delete them from the db
+		@article = Article.find(params[:id])
+		@article.destroy
+
+		# We don't need a view b/c we're redirecting to the index action (that's why we don't need a render??)
+		redirect_to articles_path
+	end
+
 	private 
 		def article_params
 			params.require(:article).permit(:title, :text)
