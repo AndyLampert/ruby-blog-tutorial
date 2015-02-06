@@ -3,6 +3,10 @@
 # index, show, new, edit, create, update, and destroy. 
 
 class ArticlesController < ApplicationController
+	def index
+		@articles = Article.all
+	end
+
 	def show
 		# .find finds the article we want
 		# (params[:id]) gets the param :id from the request
@@ -11,6 +15,13 @@ class ArticlesController < ApplicationController
 	end
 
 	def new
+		# This is creating a new instance variable called @article
+		@article = Article.new
+	end
+
+	# adds an edit action to the ArticlesController
+	def edit 
+		@artile = Article.find(params[:id])
 	end
 
 	def create
@@ -21,11 +32,25 @@ class ArticlesController < ApplicationController
 		@article = Article.new(article_params)
 
 		# saves model in the db
-		@article.save
-		# redirect user to the show action
-		redirect_to @article
-		# added to see what params look like
-		# render plain: params[:article].inspect
+		if @article.save
+			# redirect user to the show action
+			redirect_to @article
+		else
+			# render is done in the same request (redirect is another request)
+			render 'new'
+		end
+	end
+
+	# update method is used when you want to update a record that already exists
+	# accepts a hash containing attributes that you want to update
+	def update 
+		@article = Article.find(params[:id])
+
+		if @article.update(article_params)
+			redirect_to @article
+		else
+			render 'edit'
+		end
 	end
 
 	private 

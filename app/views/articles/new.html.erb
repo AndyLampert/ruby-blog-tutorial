@@ -5,6 +5,25 @@ erb is the handler that will be used
 -->
 
 <%= form_for :article, url: articles_path do |f| %>
+
+	<!-- check if there are any errors -->
+	<% if @article.errors.any? %>
+		<div id="error_explanation">
+			<h2>
+				<!-- pluralize is a helper that takes a num and str as arg -->
+				<!-- and pluralizes if the num is > 1 -->
+				<%= pluralize(@article.errors.count, "error") %>
+				Prohibited this article from being saved:
+			</h2>
+			<ul>
+				<!-- show errors -->
+				<% @article.errors.full_messages.each do |msg| %>
+					<li><%= msg %></li>
+				<% end %>
+			</ul>
+		</div>
+	<% end %>
+
 	<p>
 		<%= f.label :title %><br>
 		<%= f.text_field :title %>
@@ -17,5 +36,7 @@ erb is the handler that will be used
 		<%= f.submit %>
 	</p>
 <% end %>
+
+<%= link_to 'Back', articles_path %>
 
 <!-- check to see how the route, controller, action and view are working -->
