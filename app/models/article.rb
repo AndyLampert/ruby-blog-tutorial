@@ -1,6 +1,7 @@
 # Article class inherits from ActiveRecord::Base
 class Article < ActiveRecord::Base
-	has_many :comments
+	# this line makes sure that when we delete an article that the comments will be deleted too
+	has_many :comments, dependent: :destroy
 	validates :title, presence: true, length: { minimum: 5 }
 
 

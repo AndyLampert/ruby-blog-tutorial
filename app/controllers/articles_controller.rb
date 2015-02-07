@@ -3,6 +3,9 @@
 # index, show, new, edit, create, update, and destroy. 
 
 class ArticlesController < ApplicationController
+	# require auth in any action except index and show
+	http_basic_authenticate_with name: "andy", password: "pass", except: [:index, :show]
+
 	def index
 		@articles = Article.all
 	end

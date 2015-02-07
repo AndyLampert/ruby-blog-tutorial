@@ -9,35 +9,15 @@
 </p>
 
 <h2>Comments</h2>
-<% @article.comments.each do |comment| %>
-	<p>
-		<strong>Commenter: </strong>
-		<%= comment.commenter %>
-	</p>
-
-	<p><strong>Comment: </strong>
-		<%= comment.body %>
-	</p>
-<% end %>
-
+<!-- Renders the partial in _comment.html.erb once for each comment that is in @article.commints collection -->
+<%= render @article.comments %>
 
 <!-- Wire up to let us make comments -->
 <!-- Adds a form on Article show page that creates a new comment by calling CommentsController create action -->
 <h2>Add a comment, bud:</h2>
-<%= form_for([@article, @article.comments.build]) do |f| %>
-	<p>
-		<%= f.label :commenter %><br>
-		<%= f.text_field :commenter %>
-	</p>
-	<p>
-		<%= f.label :body %><br>
-		<%= f.text_area :body %>
-	</p>
-	<p>
-		<%= f.submit %>
-	</p>
-<% end %>
+<!-- This 2nd render defines partial template to render (comments/form)-->
+<%= render @article.comments %>
 
 <!-- add a link to go back to the index action -->
 <%= link_to 'Edit Article', edit_article_path(@article) %>
-<%= link_to 'Back to Articles', articles_path %> |
+<%= link_to 'Back to Articles', articles_path %>
